@@ -1,0 +1,43 @@
+{% extends 'auctions/layout.html' %}
+
+
+
+
+{% block body %}
+    
+{{ winner.product }}
+<div class="col-md-6  col-lg-6">
+
+  
+  {% if wins.id > 0 %}
+  <h1 class="my-5">Congratulations you Won bids !!!</h1>
+  {% endif %}
+    
+   
+
+
+{% for win in wins %}
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{ win.product.image }}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><a href="{% url 'details' product_id=win.product.id %}">{{ win }}</a></h5>
+          <p>You won!!!</p>
+          
+           
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+</div>
+
+
+{% endblock body %}
+    
+    

@@ -1,0 +1,27 @@
+{% extends 'auctions/layout.html' %}
+
+
+{% block title %}
+    Add Category
+{% endblock title %}
+
+ggg
+{% block body %}
+    <div class="container">
+       <div class="row">
+        <div class="col-md-3">
+            <form action="" method="post">
+                {% csrf_token %}
+    <label  class="form-label">Add Category </label>
+                {{form.name }}
+               <div class="mt-3">
+               <button class="btn btn-primary">Add Category </button>
+               </div>
+            </form>
+        </div>
+
+       </div>
+    </div>
+{% endblock body %}
+    
+    

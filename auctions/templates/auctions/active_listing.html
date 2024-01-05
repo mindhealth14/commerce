@@ -1,0 +1,48 @@
+{% extends 'auctions/layout.html' %}
+
+
+{% block title %}
+    Active Listing 
+{% endblock title %}
+
+
+
+
+{% block body %}
+     <div class="row">
+        <div class="col-md-2">
+      {% include 'auctions/sidebar.html' %}
+        </div>
+        <div class="col-md-10">
+                <div class="row" style="background-color: aliceblue;">
+                    {% for act in active %}
+
+                    <div class="col-md-3 col-lg-3  col-sm-6">
+                        <!-- Your item content goes here -->
+                        <!-- Example item content -->
+                        <div class="card my-2">
+                            <img class="image-thumbnail" src="{{ act.image }}" class="card-img-top rounded" alt="{{ product.product }}">
+                            <div class="card-body">
+                                <p class="card-text">Category: {{ act.category }} </p>
+                                <h5 class="card-title">{{ act.product }}</h5>
+                                <p class="card-text"> AUD ${{ act.price }}</p>
+                                <p class="card-text"> 
+                                    {% if act.is_active %}
+                                    <div class="d-flex flex-row" >
+                                        <div><b>Active: </b> </div>
+                                        <span class="status-active ml-1 mt-1"></span>
+                                    </div>
+                                    <p> Click product details to place bid</p>
+                                    {% endif %}
+                                 </p>
+                                <a href="{% url 'details' product_id=act.id %}" class="btn btn-primary mt-3">Product Details</a>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    {% endfor %}
+                </div>
+        </div>
+     </div>
+{% endblock body %}
+    

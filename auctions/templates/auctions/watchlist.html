@@ -1,0 +1,29 @@
+{% extends 'auctions/layout.html' %}
+
+
+
+{% block body %}
+<div class="offset-3">
+    <h2 class="mb-4">Your Watchlist</h2>
+
+    {% for item in watchlist %}
+     
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ item.product.image }}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{% url 'details' item.product.id %}">{{ item.product.product }}</a></h5>
+                  <p class="card-text"><a href="{% url 'watchlist_remove' item.product.id %}">Remove</a></p>
+                   
+                </div>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+</div>
+
+{% endblock body %}
+    

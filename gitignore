@@ -1,0 +1,28 @@
+# Ignore files created by the operating system
+.DS_Store
+Thumbs.db
+cs50vid.mov
+
+# Ignore files created by editors/IDEs
+.vscode/
+.idea/
+
+# Ignore Python virtual environment files
+venv/
+__pycache__/
+
+# Ignore compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore log and temporary files
+*.log
+*.tmp
+
+# Ignore environment-specific files
+.env
+
+# Ignore sensitive or configuration-specific information
+config.ini
+secrets.json

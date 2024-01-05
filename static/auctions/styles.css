@@ -1,0 +1,23 @@
+body {
+    padding: 20px;
+    background-color: blue;
+}
+
+body > a {
+    text-decoration: none;
+}
+
+.active-bidding-icon {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(105, 192, 105);
+    border-radius: 50%;
+}
+
+.inactive-bidding-icon {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(218, 218, 218);
+    border-radius: 50%;
+}
+

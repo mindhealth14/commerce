@@ -1,0 +1,50 @@
+
+
+
+
+{% block body %}
+     <!-- The Modal -->
+  <div class="modal justify-content-center align-items-center" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h6 class="modal-title">{{ product.product }}</h6>
+           
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <span> List Price: {{ cp }}</span> <br>
+            <span>Current Bid ${{ bam }}</span>
+
+            <hr>
+
+         
+            <div class="m-2">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}"/>
+                    {{ bid_form }}
+                    <small class="text-muted  text-secondary mt-0">Enter {{ cp }} or more</small>
+
+                            <div class="mt-3">
+                                <button class="btn btn-primary btn-wide" type="submit">Place Bid</button>
+                            </div>
+                </form>
+                
+            </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+    

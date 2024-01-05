@@ -1,0 +1,96 @@
+{% extends 'auctions/layout.html' %}
+
+
+{% block title %}
+    Closed Listings
+{% endblock title %}
+    
+
+
+{% block body %}
+
+<div class="row">
+        <div class="col-md-2">
+        {% include 'auctions/sidebar.html' %}
+        </div>
+
+        <div class="col-md-10">
+                
+                    
+                <div class="row" style="background-color: aliceblue;">
+                            
+                            {% if close_data %}
+
+
+                    {% for product, winners in close_data %}
+                    <div class=" col-lg-3 col-md-3 col-sm-6">
+                        <div class="card my-4">
+                            <img class="image-thumbnail" src="{{ product.image }}" class="card-img-top rounded img-fluid" alt="{{ product.product }}">
+                            <div class="card-body">
+                                <p class="card-text"> Category: {{ product.category }} </p>
+                                    <h5 class="card-title">{{ product.product }}</h5>
+                                    <p class="card-text"> AUD ${{ product.price }}</p>
+                                    <p class="card-text"> 
+                                        {% if clo.is_active %}
+                                        <div class="d-flex flex-row" >
+                                            <div><b>Active: </b> </div>
+                                            <span class="status-inactive ml-1 mt-1"></span>
+                                        </div>
+                                        <p> Click product details to place bid</p>
+                                        {% else %}
+                                        <div class="d-flex flex-row" >
+                                            <div><b>Closed Listing: </b> </div>
+                                            <span class="status-inactive ml-1 mt-1"></span>
+                                            
+                                        </div>
+                                    {% endif %}
+                                        <div class="row gx-5 ">
+
+                                            <div class="col">
+                                                <a href="{% url 'details' product_id=product.id %}" class="btn btn-primary mt-3"> Product Details</a>
+                                            </div>
+                                                
+
+
+                                            <div class="col mt-3">
+                                                    <!-- Check if there are winners for this product -->
+                                                        {% if winners %}
+                    
+                                                        <ul>
+                                                            {% for winner in winners %}
+                                                            <li>Product won by: <small> {{ winner.user }} </small> </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                        {% else %}
+                                                        <small> No winner on this product.</small>
+                                                        {% endif %}
+                                                
+                                            </div>
+                                        </div>
+                                    
+
+                            </div>
+                        </div>
+                    </div>
+                    
+        
+
+
+                    {% endfor %}
+                        {% else %}
+                        <p>No closed listings available.</p>
+                        {% endif %}
+                
+                                
+                        
+
+
+                </div>
+
+
+        </div>
+       
+</div>
+     
+{% endblock body %}
+    

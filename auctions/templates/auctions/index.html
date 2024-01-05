@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-2">
+        {% include 'auctions/sidebar.html' %}
+
+    </div>
+
+    <div class="col-md-10">
+        <div class="row" style="background-color: aliceblue;">
+            
+        {% for product in products %}
+                <div class="col-md-3 col-lg-3 col-sm-6">
+               <!-- Your item content goes here -->
+                <!-- Example item content -->
+                <div class="card my-2">
+                    <img class="image-thumbnail" src="{{ product.image }}" class="card-img-top rounded" alt="{{ product.product }}">
+                    <div class="card-body">
+                        <div>Category: {{product.category.name}} </div>
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text"> AUD ${{ product.price }}</p>
+                        <a href="{% url 'details' product_id=product.id %}" class="btn btn-primary mt-3">Product Details</a>
+                    </div>
+                </div>
+        
+        <!-- End of row for each product -->
+                </div>
+        {% empty %}
+        <h1>No Product Found </h1>
+       {% endfor %}
+   
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+      
+    
+     
+  
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'auctions/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Product Details
+{% endblock title %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-3">
+           {% include 'auctions/sidebar.html' %}
+
+            <div class="mt-5">
+            <a href="{% url 'winner' %}"> My Winnings </a>
+            </div>
+    </div> 
+
+    <div class="col-md-9">
+        <!-- Media object from Bootstrap -->
+<div class="d-flex">
+    <div class="flex-shrink-0">
+        <img class="rounded" src="{{ product.image }}" alt="{{ product.product }}" width="400px">
+    </div>
+    <div class="flex-grow-1  mx-5">
+        
+        <div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <p class="fs-1"> <strong>{{ product.product }}  </strong></p>
+                    <div>
+                        {% if request.user|stringformat:"s" == product.seller|stringformat:"s" and product.is_active == True %}
+                        <form action="{% url 'close_bid' %}" method='post'>
+                            {% csrf_token %}
+                            <button type="submit" name="product_id" value="{{ product.id }}" class="btn btn-outline-danger">Close
+                                bid</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+
+            <hr>
+            <div>
+                {% if product.is_active %}
+                <div class="d-flex flex-row" >
+                    <div class="mt-3"><b>Active: </b></div>
+                    <div class="status-active m-3"></div>
+                    
+                </div>
+                    
+                {% else %}
+                <div>
+                    <div class="mt-3"><b>Inactive: </b></div>
+                    <div class="status-inactive m-3"></div>
+
+                </div>
+                {% endif %}
+                   
+                <div>
+                    <span><strong>Listed by:</strong> {{ product.seller }} on {{ product.listed_date }} </span><br>
+                    <span><strong>Listed Price:</strong> AUD ${{ product.price }}</span><br>
+                    <span><strong>Category:</strong> {{ product.category }}</span>
+                    <div><strong>Description:</strong> {{ product.description }}</div>
+                </div>
+
+                
+            </div>
+            <div class="mt-3 ">
+            
+                <h4> All Bids </h4>
+
+                 <ul> 
+                    
+                            {% if bid_count > 0 %}
+                            <div> Current bid [{{ bid_count }}] </div>
+                            {% else %}
+                                <p>There is [ ${{ bam }} ] bid. Be the first to place a bid.</p>
+                            {% endif %}
+                        
+                        
+                        <div> Total Bid Amount: ${{ bam }} </div>
+                      
+                       
+
+                 <div class="mt-3 d-flex gap-2">
+                          
+                          {% if product.is_active %}
+                           <!-- Button to trigger the modal -->
+
+                           
+                           {% if product.seller == request.user %}
+                               <button class="btn btn-outline-secondary" onclick="myFunction()"> Place Bid </button>
+                            {% else %}
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width: 150px;">
+                            Place Bid
+                        </button>
+                           {% endif %}
+                                 
+                           
+                           {% if product.seller == request.user %}
+                           <span method="post">
+                            <button id="watchlist" class="btn btn-outline-secondary" type="submit" onclick="handleMsg()" >Add to Watchlist</button>
+                           </span> 
+                           <small class="text-danger own-list" style="display: none;"> You can not add your own product to your Watchlist</small>
+                           {% else %}
+
+                           
+                           {% if watch %}
+                           <span>
+                            <form method="post" action="{% url 'watchlist_toggle' product.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-primary" type="submit">Remove watchlist</button>
+                            </form>
+                           </span>
+                              {% else %}
+                              <form method="post" action="{% url 'watchlist_toggle' product.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-primary" type="submit">Add to watchlist</button>
+                            </form>
+                           </span>
+
+                            
+                           {% endif %}
+                            
+                
+
+
+                          
+                            
+                           {% endif %}
+                            
+                            
+                       
+
+
+                          {% else %}
+                            <h2> The product is not available for auction </h2>
+                          {% endif %}                           
+                 </div>
+            </div>
+            <hr>
+            <!-- I am going to create my comments form here  -->
+              <p>All Comments...</p>
+               
+               {% if not product.comments.all %}
+
+                  No Comments Yet... 
+
+                  {% else %}
+                  
+                  {% for comment in product.comments.all %}
+                  <div class="shadow-md p-1 bg-body rounded">
+                    <div><small><i>@{{ comment.user }} | {{ comment.created_at }}</i> </small> </div>
+
+                            <!-- handle delete -->
+                           <div class="d-flex justify-content-between">
+                            <span>  {{ comment.comment }}</span>
+                            <small><form action = "{% url 'delete_comment' %}" method = "POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="comment_id" value="{{ comment.id }}"/>
+                                <input type="hidden" name="product_id" value="{{ product.id }}"/>
+                                <button>Delete</button>
+                            </form></small>
+                           </div>
+                    </div>
+
+               
+                    
+                  {% endfor %}
+                    
+                
+               {% endif %}
+                
+              
+               
+
+
+
+            <div>
+                <h6 class="mt-5">Leave comment or ask questions about this product </h6>
+                <form method="get" action="{% url 'comments' product.id %}">
+                    <input required type="text" placeholder="Add Comment" name="comment">
+                    <button class="btn btn-outline-primary" type="submit" value="{{ product.id }}" name="prodid">Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Modal here-->
+
+<div>
+  {% include 'auctions/modal.html' %}
+
+</div>
+ <!-- end of modal  -->
+    </div>
+
+</div>
+  
+{% endblock body %}

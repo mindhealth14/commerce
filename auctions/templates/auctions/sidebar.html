@@ -1,0 +1,38 @@
+<!-- SideBar-->
+
+
+  
+    <div class="card" >
+      <div class="card-header bg-primary text-white">
+        Categories
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> <a href="{% url 'index' %}"  >All</a>  </li>
+        
+        {% for cat in categories %}
+        <a href="{% url 'index'  %}?cat={{ cat.name}}   "><li class="list-group-item"> {{ cat.name }}</li></a>
+        {% endfor %}
+    
+      </ul>
+    </div>
+ 
+    <hr>
+
+    <div class="mt-2">
+      <div class="card" >
+        <div class="card-header bg-primary text-white">
+          Winnings
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"> <a href="{% url 'winner' %}"> My Winnings </a> </li>
+          
+      
+        </ul>
+      </div>
+      
+  </div>
+
+ 
+
+ 
+    
